@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tjl.credit.dao.ProfessionalMapper">
+  <resultMap id="BaseResultMap" type="com.tjl.credit.domain.Professional">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="college_id" jdbcType="INTEGER" property="collegeId" />
+    <result column="professional" jdbcType="VARCHAR" property="professional" />
+  </resultMap>
+  <insert id="insert" parameterType="com.tjl.credit.domain.Professional">
+    insert into professional (id, college_id, professional
+      )
+    values (#{id,jdbcType=INTEGER}, #{collegeId,jdbcType=INTEGER}, #{professional,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tjl.credit.domain.Professional">
+    insert into professional
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="collegeId != null">
+        college_id,
+      </if>
+      <if test="professional != null">
+        professional,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="collegeId != null">
+        #{collegeId,jdbcType=INTEGER},
+      </if>
+      <if test="professional != null">
+        #{professional,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

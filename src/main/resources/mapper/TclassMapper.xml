@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tjl.credit.dao.TclassMapper">
+  <resultMap id="BaseResultMap" type="com.tjl.credit.domain.Tclass">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="professional_id" jdbcType="INTEGER" property="professionalId" />
+    <result column="tclass" jdbcType="VARCHAR" property="tclass" />
+  </resultMap>
+  <insert id="insert" parameterType="com.tjl.credit.domain.Tclass">
+    insert into tclass (id, professional_id, tclass
+      )
+    values (#{id,jdbcType=INTEGER}, #{professionalId,jdbcType=INTEGER}, #{tclass,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tjl.credit.domain.Tclass">
+    insert into tclass
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="professionalId != null">
+        professional_id,
+      </if>
+      <if test="tclass != null">
+        tclass,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="professionalId != null">
+        #{professionalId,jdbcType=INTEGER},
+      </if>
+      <if test="tclass != null">
+        #{tclass,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
