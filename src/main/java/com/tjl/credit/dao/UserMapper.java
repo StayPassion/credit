@@ -1,6 +1,7 @@
 package com.tjl.credit.dao;
 
 import com.tjl.credit.domain.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,5 +16,9 @@ public interface UserMapper {
 
     int queryNum(User user) throws Exception;
 
-    List<User> queryAllUser() throws Exception;
+    List<User> queryAllUser(@Param("offset") Integer offset, @Param("pageSize") Integer pageSize) throws Exception;
+
+    int queryUserByNumber(User user);
+
+    int queryCount()throws Exception;
 }

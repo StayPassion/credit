@@ -17,6 +17,16 @@ public class Role {
 
     private Integer creditsmanage;
 
+    private Integer applymanage;
+
+    public Integer getApplymanage() {
+        return applymanage;
+    }
+
+    public void setApplymanage(Integer applymanage) {
+        this.applymanage = applymanage;
+    }
+
     public Integer getId() {
         return id;
     }

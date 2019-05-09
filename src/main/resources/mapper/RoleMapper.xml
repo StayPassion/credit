@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tjl.credit.dao.RoleMapper">
-  <resultMap id="RoleResultMap" type="com.tjl.credit.domain.Role">
-    <result column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="personmanage" jdbcType="INTEGER" property="personmanage" />
-    <result column="rolemmanage" jdbcType="INTEGER" property="rolemmanage" />
-    <result column="usermanage" jdbcType="INTEGER" property="usermanage" />
-    <result column="noticemanage" jdbcType="INTEGER" property="noticemanage" />
-    <result column="auditmanage" jdbcType="INTEGER" property="auditmanage" />
-    <result column="creditsmanage" jdbcType="INTEGER" property="creditsmanage" />
-  </resultMap>
-  <insert id="insert" >
+    <resultMap id="RoleResultMap" type="com.tjl.credit.domain.Role">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="personmanage" jdbcType="INTEGER" property="personmanage"/>
+        <result column="rolemmanage" jdbcType="INTEGER" property="rolemmanage"/>
+        <result column="usermanage" jdbcType="INTEGER" property="usermanage"/>
+        <result column="noticemanage" jdbcType="INTEGER" property="noticemanage"/>
+        <result column="auditmanage" jdbcType="INTEGER" property="auditmanage"/>
+        <result column="applymanage" jdbcType="INTEGER" property="applymanage"/>
+        <result column="creditsmanage" jdbcType="INTEGER" property="creditsmanage"/>
+    </resultMap>
+    <insert id="insert">
     insert into role (user_id)
     values ( #{userId})
   </insert>
 
-  <select id="queryRole" resultMap="RoleResultMap">
+    <select id="queryRole" resultMap="RoleResultMap">
     select * from role where user_id = #{id}
-  </select>
+    </select>
+
+    <update id="createRole" parameterType="com.tjl.credit.domain.Role">
+    update role
+    set
+      personmanage = #{personmanage,jdbcType=INTEGER},
+      rolemmanage = #{rolemmanage,jdbcType=INTEGER},
+      usermanage = #{usermanage,jdbcType=INTEGER},
+      noticemanage = #{noticemanage,jdbcType=INTEGER},
+      auditmanage = #{auditmanage,jdbcType=INTEGER},
+      creditsmanage = #{creditsmanage,jdbcType=INTEGER},
+      applymanage = #{applymanage}
+        where user_id = #{userId}
+    </update>
 </mapper>

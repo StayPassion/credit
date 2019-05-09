@@ -137,7 +137,7 @@
   </select>
 
   <select id="queryAllUser" resultType="com.tjl.credit.domain.User" >
-    select * from user
+    select * from user limit #{offset},#{pageSize}
   </select>
   <update id="updateByExampleSelective" parameterType="map">
     update user
@@ -184,7 +184,12 @@
     </set>
 
   </update>
-
+<select id="queryUserByNumber" resultType="Integer">
+  select count(*) from user where username = #{username}
+</select>
+  <select id="queryCount" resultType="Integer">
+    select count(*) from user
+  </select>
 
 
 </mapper>
