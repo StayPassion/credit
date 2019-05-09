@@ -4,7 +4,7 @@ import com.tjl.credit.domain.Role;
 import org.apache.ibatis.annotations.Param;
 
 public interface RoleMapper {
-    int insert(@Param("userId") int record);
+    int insert(@Param("userId") int record) throws Exception;
 
-    Role queryRole(@Param("userId") int id)throws Exception;
+    Role queryRole(int id)throws Exception;
 }

@@ -16,7 +16,7 @@
     values ( #{userId})
   </insert>
 
-  <select id="queryRole" resultType="com.tjl.credit.domain.Role">
-    select * from role where user_id = #{userId}
+  <select id="queryRole" resultMap="RoleResultMap">
+    select * from role where user_id = #{id}
   </select>
 </mapper>
