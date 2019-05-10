@@ -139,57 +139,57 @@
     <select id="queryAllUser" resultType="com.tjl.credit.domain.User">
     select * from user
   </select>
-    <update id="updateByExampleSelective" parameterType="map">
+    <update id="updateUser">
         update user
         <set>
-            <if test="record.name != null">
-                name = #{record.name,jdbcType=VARCHAR},
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
             </if>
-            <if test="record.password != null">
-                password = #{record.password,jdbcType=VARCHAR},
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
             </if>
-            <if test="record.username != null">
-                username = #{record.username,jdbcType=VARCHAR},
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
             </if>
-            <if test="record.sex != null">
-                sex = #{record.sex,jdbcType=VARCHAR},
+            <if test="college != null">
+                college = #{college,jdbcType=VARCHAR},
             </if>
-            <if test="record.college != null">
-                college = #{record.college,jdbcType=VARCHAR},
+            <if test="professional != null">
+                professional = #{professional,jdbcType=VARCHAR},
             </if>
-            <if test="record.professional != null">
-                professional = #{record.professional,jdbcType=VARCHAR},
+            <if test="tclass != null">
+                tclass = #{tclass,jdbcType=VARCHAR},
             </if>
-            <if test="record.tclass != null">
-                tclass = #{record.tclass,jdbcType=VARCHAR},
+            <if test="national != null">
+                national = #{national,jdbcType=VARCHAR},
             </if>
-            <if test="record.national != null">
-                national = #{record.national,jdbcType=VARCHAR},
+            <if test="card != null">
+                card = #{card,jdbcType=VARCHAR},
             </if>
-            <if test="record.card != null">
-                card = #{record.card,jdbcType=VARCHAR},
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
             </if>
-            <if test="record.phone != null">
-                phone = #{record.phone,jdbcType=VARCHAR},
+            <if test="birth != null">
+                birth = #{birth,jdbcType=DATE},
             </if>
-            <if test="record.birth != null">
-                birth = #{record.birth,jdbcType=DATE},
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
             </if>
-            <if test="record.email != null">
-                email = #{record.email,jdbcType=VARCHAR},
-            </if>
-            <if test="record.permission != null">
-                permission = #{record.permission,jdbcType=INTEGER},
+            <if test="permission != null">
+                permission = #{permission,jdbcType=INTEGER},
             </if>
         </set>
-
+        where username = #{username}
     </update>
     <select id="queryUserByNumber" resultType="Integer">
     select count(*) from user where username = #{username}
     </select>
     <select id="queryCount" resultType="Integer">
     select count(*) from user
-  </select>
+    </select>
+    <delete id="deleteUser">
+        delete from user where username = #{username}
+    </delete>
 
 
 </mapper>

@@ -123,4 +123,24 @@ public class AdminService {
             return RetResponse.makeErrRsp("添加失败");
         }
     }
+
+    public RetResult updateUser(User user) throws Exception {
+        int flag = userMapper.updateUser(user);
+        if (flag == 1) {
+            return RetResponse.makeOKRsp("修改成功");
+        } else if (flag == 0){
+            return RetResponse.makeOKRsp("没有任何修改");
+        }else {
+            return RetResponse.makeErrRsp("修改失败");
+        }
+    }
+
+    public RetResult deleteUser(User user) throws Exception {
+        int flag = userMapper.deleteUser(user);
+        if (flag == 1) {
+            return RetResponse.makeOKRsp("删除成功");
+        }else {
+            return RetResponse.makeErrRsp("删除失败");
+        }
+    }
 }

@@ -18,7 +18,10 @@ public interface UserMapper {
 
     List<User> queryAllUser() throws Exception;
 
-    int queryUserByNumber(User user);
+    int queryUserByNumber(User user)throws Exception;
 
     int queryCount()throws Exception;
+
+    int updateUser(User record)throws Exception;
+    int deleteUser(User user)throws Exception;
 }

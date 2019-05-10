@@ -70,7 +70,7 @@ public class AdminController {
      *
      * @return
      */
-    @PostMapping("/creatUser")
+    @PostMapping("/createUser")
     public RetResult createUser(@RequestBody User user){
         try {
             RetResult retResult = adminService.createUser(user);
@@ -89,6 +89,33 @@ public class AdminController {
 
         try {
             RetResult retResult = adminService.queryAllUser();
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+    /**
+     * 修改用户
+     * @return
+     */
+    @PostMapping("/updateUser")
+    public RetResult updateUser(@RequestBody User user){
+        try {
+            RetResult retResult = adminService.updateUser(user);
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+
+    /**
+     * 修改用户
+     * @return
+     */
+    @PostMapping("/deleteUser")
+    public RetResult deleteUser(@RequestBody User user){
+        try {
+            RetResult retResult = adminService.deleteUser(user);
             return retResult;
         } catch (Exception e) {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
