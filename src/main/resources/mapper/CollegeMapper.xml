@@ -6,8 +6,8 @@
     <result column="college" jdbcType="VARCHAR" property="college" />
   </resultMap>
   <insert id="insert" parameterType="com.tjl.credit.domain.College">
-    insert into college (id, college)
-    values (#{id,jdbcType=INTEGER}, #{college,jdbcType=VARCHAR})
+    insert into college (college)
+    values (#{college,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.tjl.credit.domain.College">
     insert into college

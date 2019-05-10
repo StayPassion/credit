@@ -1,8 +1,7 @@
 package com.tjl.credit.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.tjl.credit.domain.Role;
-import com.tjl.credit.domain.User;
+import com.tjl.credit.domain.*;
 import com.tjl.credit.service.AdminService;
 import com.tjl.credit.utils.RetResponse;
 import com.tjl.credit.utils.RetResult;
@@ -52,8 +51,23 @@ public class AdminController {
     }
 
     /**
+     * 查询所有角色
+     * @return
+     */
+    @PostMapping("/queryAllRole")
+    public RetResult queryAllRole(){
+        try {
+            RetResult retResult = adminService.queryAllRole();
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+
+    /**
      * 创建用户
      * @param user
+     *
      * @return
      */
     @PostMapping("/creatUser")
@@ -82,28 +96,74 @@ public class AdminController {
     }
 
     /**
-     * 分配权限
-     * @param jsonObject
+     * 修改角色权限
+     * @param role
      * @return
      */
     @PostMapping("/createRole")
-    public RetResult createRole(@RequestBody JSONObject jsonObject){
-        Role role = new Role();
-        role.setApplymanage(jsonObject.getInteger("applymanage"));
-        role.setAuditmanage(jsonObject.getInteger("auditmanage"));
-        role.setCreditsmanage(jsonObject.getInteger("creditsmanage"));
-        role.setNoticemanage(jsonObject.getInteger("noticemanage"));
-        role.setPersonmanage(jsonObject.getInteger("personmanage"));
-        role.setRolemmanage(jsonObject.getInteger("rolemmanage"));
-        role.setUsermanage(jsonObject.getInteger("usermanage"));
-        Integer userNum = jsonObject.getInteger("username");
+    public RetResult createRole(@RequestBody  Role role){
         try {
-            RetResult retResult = adminService.createRole(userNum,role);
+            RetResult retResult = adminService.createRole(role);
             return retResult;
         } catch (Exception e) {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
         }
     }
-
+    /**
+     * 修改角色权限
+     * @param role
+     * @return
+     */
+    @PostMapping("/deleteRole")
+    public RetResult deleteRole(@RequestBody  Role role){
+        try {
+            RetResult retResult = adminService.deleteRole(role);
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+    /**
+     * 添加学院
+     * @param college
+     * @return
+     */
+    @PostMapping("/createCollege")
+    public RetResult createCollege(@RequestBody College college){
+        try {
+            RetResult retResult = adminService.createCollege(college);
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+    /**
+     * 添加专业
+     * @param professional
+     * @return
+     */
+    @PostMapping("/createProfessional")
+    public RetResult createProfessional(@RequestBody Professional professional){
+        try {
+            RetResult retResult = adminService.createProfessional(professional);
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+    /**
+     * 添加班级
+     * @param tclass
+     * @return
+     */
+    @PostMapping("/createTclass")
+    public RetResult createTclass(@RequestBody Tclass tclass){
+        try {
+            RetResult retResult = adminService.createTclass(tclass);
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
 
 }

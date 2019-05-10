@@ -1,9 +1,7 @@
 package com.tjl.credit.service;
 
-import com.tjl.credit.dao.RoleMapper;
-import com.tjl.credit.dao.UserMapper;
-import com.tjl.credit.domain.Role;
-import com.tjl.credit.domain.User;
+import com.tjl.credit.dao.*;
+import com.tjl.credit.domain.*;
 import com.tjl.credit.utils.RetResponse;
 import com.tjl.credit.utils.RetResult;
 import org.springframework.stereotype.Service;
@@ -24,7 +22,12 @@ public class AdminService {
     private UserMapper userMapper;
     @Resource
     private RoleMapper roleMapper;
-
+    @Resource
+    private CollegeMapper collegeMapper;
+    @Resource
+    private ProfessionalMapper professionalMapper;
+    @Resource
+    private TclassMapper tclassMapper;
 
     public RetResult queryUserByNumber(User user) throws Exception {
         int flag = userMapper.queryUserByNumber(user);
@@ -36,12 +39,9 @@ public class AdminService {
         return RetResponse.makeErrRsp("出现错误");
     }
 
-    //创建用户时直接传入权限的permission 写一个查询角色接口
     public RetResult createUser(User user) throws Exception {
         int flag = userMapper.insertSelective(user);
         if (flag == 1) {
-            /*int userNum = userMapper.queryNum(user);
-            roleMapper.insert(userNum);*/
             return RetResponse.makeOKRsp("添加成功");
         }
         return RetResponse.makeErrRsp("添加失败");
@@ -50,9 +50,6 @@ public class AdminService {
     public RetResult queryAllUser() throws Exception {
 
         List<User> userList = userMapper.queryAllUser();
-/*        map.put("userList", userList);
-        int count = userMapper.queryCount();
-        map.put("count", count);*/
         if (userList.size() >= 0) {
             return RetResponse.makeOKRsp("查询成功", userList);
         } else {
@@ -60,7 +57,7 @@ public class AdminService {
         }
     }
 
-    public RetResult createRole(Integer userNum,Role role) throws Exception {
+    public RetResult createRole(Role role) throws Exception {
 
         int flag = roleMapper.createRole(role);
         if (flag > 0) {
@@ -78,6 +75,52 @@ public class AdminService {
         } else{
             return RetResponse.makeErrRsp("角色插入失败");
 
+        }
+    }
+
+    public RetResult queryAllRole() throws Exception {
+        List<Role> roleList = roleMapper.queryAllRole();
+        if (roleList.size()>0){
+            return RetResponse.makeOKRsp("查询成功",roleList);
+        }else {
+            return RetResponse.makeErrRsp("查询失败");
+        }
+    }
+
+    public RetResult deleteRole(Role role) throws Exception {
+        int flag = roleMapper.deleteRole(role);
+        if (flag == 1) {
+            return RetResponse.makeOKRsp("删除成功");
+        } else{
+            return RetResponse.makeErrRsp("删除失败");
+
+        }
+    }
+
+    public RetResult createCollege(College college) {
+        int flag = collegeMapper.insert(college);
+        if (flag == 1) {
+            return RetResponse.makeOKRsp("添加成功");
+        } else{
+            return RetResponse.makeErrRsp("添加失败");
+        }
+    }
+
+    public RetResult createProfessional(Professional professional) {
+        int flag = professionalMapper.insert(professional);
+        if (flag == 1) {
+            return RetResponse.makeOKRsp("添加成功");
+        } else{
+            return RetResponse.makeErrRsp("添加失败");
+        }
+    }
+
+    public RetResult createTclass(Tclass tclass) {
+        int flag = tclassMapper.insert(tclass);
+        if (flag == 1) {
+            return RetResponse.makeOKRsp("添加成功");
+        } else{
+            return RetResponse.makeErrRsp("添加失败");
         }
     }
 }

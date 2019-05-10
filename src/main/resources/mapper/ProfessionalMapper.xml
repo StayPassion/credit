@@ -7,9 +7,9 @@
     <result column="professional" jdbcType="VARCHAR" property="professional" />
   </resultMap>
   <insert id="insert" parameterType="com.tjl.credit.domain.Professional">
-    insert into professional (id, college_id, professional
+    insert into professional (college_id, professional
       )
-    values (#{id,jdbcType=INTEGER}, #{collegeId,jdbcType=INTEGER}, #{professional,jdbcType=VARCHAR}
+    values ( #{collegeId,jdbcType=INTEGER}, #{professional,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.tjl.credit.domain.Professional">

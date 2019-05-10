@@ -31,7 +31,7 @@
       auditmanage = #{auditmanage,jdbcType=INTEGER},
       creditsmanage = #{creditsmanage,jdbcType=INTEGER},
       applymanage = #{applymanage}
-        where user_id = #{userId}
+        where rolename = #{rolename}
     </update>
     <insert id="insertRole" parameterType="com.tjl.credit.domain.Role">
         insert into role
@@ -88,4 +88,10 @@
             </if>
         </trim>
     </insert>
+    <select id="queryAllRole" resultMap="RoleResultMap">
+        select * from credit.role;
+    </select>
+    <delete id="deleteRole">
+        delete from credit.role where rolename = #{rolename}
+    </delete>
 </mapper>
