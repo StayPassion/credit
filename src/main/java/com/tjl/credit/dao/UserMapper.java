@@ -14,9 +14,9 @@ public interface UserMapper {
 
     int queryId(User user) throws Exception;
 
-    int queryNum(User user) throws Exception;
+    /*int queryNum(User user) throws Exception;*/
 
-    List<User> queryAllUser(@Param("offset") Integer offset, @Param("pageSize") Integer pageSize) throws Exception;
+    List<User> queryAllUser() throws Exception;
 
     int queryUserByNumber(User user);
 

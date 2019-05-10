@@ -25,14 +25,14 @@ public class UserService {
     private RoleMapper roleMapper;
 
     public RetResult userLogin(User user) throws Exception {
-        Map<String ,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         User userInfo = userMapper.userLogin(user);
-        map.put("userInfo",userInfo);
+        map.put("userInfo", userInfo);
+
         if (userInfo != null) {
-            int id = userMapper.queryId(user);
-            Role role = roleMapper.queryRole(id);
-            map.put("userRole",role);
-            return RetResponse.makeOKRsp("登录成功",map);
+            Role role = roleMapper.queryRole(userInfo.getPermission());
+            map.put("userRole", role);
+            return RetResponse.makeOKRsp("登录成功", map);
         }
         return RetResponse.makeOKRsp("用户名或密码错误");
     }

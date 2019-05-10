@@ -37,6 +37,21 @@ public class AdminController {
         }
     }
     /**
+     * 创建角色
+     * @param role
+     * @return
+     */
+    @PostMapping("/insertRole")
+    public RetResult insertRole(@RequestBody Role role){
+        try {
+            RetResult retResult = adminService.insertRole(role);
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+
+    /**
      * 创建用户
      * @param user
      * @return
@@ -53,15 +68,13 @@ public class AdminController {
 
     /**
      * 查询所有用户
-     * @param jsonObject
      * @return
      */
     @PostMapping("/queryAllUser")
-    public RetResult queryAllUser(@RequestBody JSONObject jsonObject){
-        Integer offset = jsonObject.getInteger("offset");
-        Integer pageSize = jsonObject.getInteger("pageSize");
+    public RetResult queryAllUser(){
+
         try {
-            RetResult retResult = adminService.queryAllUser(offset,pageSize);
+            RetResult retResult = adminService.queryAllUser();
             return retResult;
         } catch (Exception e) {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
@@ -70,14 +83,22 @@ public class AdminController {
 
     /**
      * 分配权限
-     * @param role
+     * @param jsonObject
      * @return
      */
     @PostMapping("/createRole")
-    public RetResult createRole(@RequestBody Role role){
-
+    public RetResult createRole(@RequestBody JSONObject jsonObject){
+        Role role = new Role();
+        role.setApplymanage(jsonObject.getInteger("applymanage"));
+        role.setAuditmanage(jsonObject.getInteger("auditmanage"));
+        role.setCreditsmanage(jsonObject.getInteger("creditsmanage"));
+        role.setNoticemanage(jsonObject.getInteger("noticemanage"));
+        role.setPersonmanage(jsonObject.getInteger("personmanage"));
+        role.setRolemmanage(jsonObject.getInteger("rolemmanage"));
+        role.setUsermanage(jsonObject.getInteger("usermanage"));
+        Integer userNum = jsonObject.getInteger("username");
         try {
-            RetResult retResult = adminService.createRole(role);
+            RetResult retResult = adminService.createRole(userNum,role);
             return retResult;
         } catch (Exception e) {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");

@@ -25,6 +25,7 @@ public class AdminService {
     @Resource
     private RoleMapper roleMapper;
 
+
     public RetResult queryUserByNumber(User user) throws Exception {
         int flag = userMapper.queryUserByNumber(user);
         if (flag == 1) {
@@ -35,30 +36,32 @@ public class AdminService {
         return RetResponse.makeErrRsp("出现错误");
     }
 
+    //创建用户时直接传入权限的permission 写一个查询角色接口
     public RetResult createUser(User user) throws Exception {
         int flag = userMapper.insertSelective(user);
         if (flag == 1) {
-            int userNum = userMapper.queryNum(user);
-            roleMapper.insert(userNum);
+            /*int userNum = userMapper.queryNum(user);
+            roleMapper.insert(userNum);*/
             return RetResponse.makeOKRsp("添加成功");
         }
         return RetResponse.makeErrRsp("添加失败");
     }
 
-    public RetResult queryAllUser(Integer offset, Integer pageSize) throws Exception {
-        Map<String, Object> map = new HashMap<>();
-        List<User> userList = userMapper.queryAllUser(offset, pageSize);
-        map.put("userList", userList);
+    public RetResult queryAllUser() throws Exception {
+
+        List<User> userList = userMapper.queryAllUser();
+/*        map.put("userList", userList);
         int count = userMapper.queryCount();
-        map.put("count", count);
-        if (count >= 0) {
-            return RetResponse.makeOKRsp("查询成功", map);
+        map.put("count", count);*/
+        if (userList.size() >= 0) {
+            return RetResponse.makeOKRsp("查询成功", userList);
         } else {
             return RetResponse.makeErrRsp("查询失败");
         }
     }
 
-    public RetResult createRole(Role role) throws Exception {
+    public RetResult createRole(Integer userNum,Role role) throws Exception {
+
         int flag = roleMapper.createRole(role);
         if (flag > 0) {
             return RetResponse.makeOKRsp("权限修改成功");
@@ -66,5 +69,15 @@ public class AdminService {
             return RetResponse.makeOKRsp("权限没有任何修改");
         }
         return RetResponse.makeErrRsp("权限修改失败");
+    }
+
+    public RetResult insertRole(Role role) throws Exception {
+       int flag = roleMapper.insertRole(role);
+        if (flag == 1) {
+            return RetResponse.makeOKRsp("角色插入成功");
+        } else{
+            return RetResponse.makeErrRsp("角色插入失败");
+
+        }
     }
 }

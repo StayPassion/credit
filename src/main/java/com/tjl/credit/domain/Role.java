@@ -3,8 +3,6 @@ package com.tjl.credit.domain;
 public class Role {
     private Integer id;
 
-    private Integer userId;
-
     private Integer personmanage;
 
     private Integer rolemmanage;
@@ -18,6 +16,16 @@ public class Role {
     private Integer creditsmanage;
 
     private Integer applymanage;
+
+    private String rolename;
+
+    public String getRolename() {
+        return rolename;
+    }
+
+    public void setRolename(String rolename) {
+        this.rolename = rolename;
+    }
 
     public Integer getApplymanage() {
         return applymanage;
@@ -35,13 +43,6 @@ public class Role {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 
     public Integer getPersonmanage() {
         return personmanage;

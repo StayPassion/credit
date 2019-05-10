@@ -3,7 +3,6 @@
 <mapper namespace="com.tjl.credit.dao.RoleMapper">
     <resultMap id="RoleResultMap" type="com.tjl.credit.domain.Role">
         <result column="id" jdbcType="INTEGER" property="id"/>
-        <result column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="personmanage" jdbcType="INTEGER" property="personmanage"/>
         <result column="rolemmanage" jdbcType="INTEGER" property="rolemmanage"/>
         <result column="usermanage" jdbcType="INTEGER" property="usermanage"/>
@@ -11,6 +10,7 @@
         <result column="auditmanage" jdbcType="INTEGER" property="auditmanage"/>
         <result column="applymanage" jdbcType="INTEGER" property="applymanage"/>
         <result column="creditsmanage" jdbcType="INTEGER" property="creditsmanage"/>
+        <result column="rolename" jdbcType="VARCHAR" property="rolename"/>
     </resultMap>
     <insert id="insert">
     insert into role (user_id)
@@ -18,7 +18,7 @@
   </insert>
 
     <select id="queryRole" resultMap="RoleResultMap">
-    select * from role where user_id = #{id}
+    select * from role where id = #{id}
     </select>
 
     <update id="createRole" parameterType="com.tjl.credit.domain.Role">
@@ -33,4 +33,59 @@
       applymanage = #{applymanage}
         where user_id = #{userId}
     </update>
+    <insert id="insertRole" parameterType="com.tjl.credit.domain.Role">
+        insert into role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="personmanage != null">
+                personmanage,
+            </if>
+            <if test="rolemmanage != null">
+                rolemmanage,
+            </if>
+            <if test="usermanage != null">
+                usermanage,
+            </if>
+            <if test="noticemanage != null">
+                noticemanage,
+            </if>
+            <if test="auditmanage != null">
+                auditmanage,
+            </if>
+            <if test="creditsmanage != null">
+                creditsmanage,
+            </if>
+            <if test="rolename != null">
+                rolename,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="personmanage != null">
+                #{personmanage,jdbcType=INTEGER},
+            </if>
+            <if test="rolemmanage != null">
+                #{rolemmanage,jdbcType=INTEGER},
+            </if>
+            <if test="usermanage != null">
+                #{usermanage,jdbcType=INTEGER},
+            </if>
+            <if test="noticemanage != null">
+                #{noticemanage,jdbcType=INTEGER},
+            </if>
+            <if test="auditmanage != null">
+                #{auditmanage,jdbcType=INTEGER},
+            </if>
+            <if test="creditsmanage != null">
+                #{creditsmanage,jdbcType=INTEGER},
+            </if>
+            <if test="rolename != null">
+                #{rolename,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
 </mapper>
