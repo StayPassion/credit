@@ -6,12 +6,13 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="file" jdbcType="VARCHAR" property="file" />
+      <result column="date" jdbcType="VARCHAR" property="date"/>
   </resultMap>
   <insert id="insert" parameterType="com.tjl.credit.domain.Notice">
-    insert into notice (id, title, content, 
-      file)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{file,jdbcType=VARCHAR})
+    insert into notice ( title, content,
+      file,date)
+    values ( #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+      #{file,jdbcType=VARCHAR},#{date,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.tjl.credit.domain.Notice">
     insert into notice
@@ -44,4 +45,10 @@
       </if>
     </trim>
   </insert>
+    <select id="lookNotice" resultType="com.tjl.credit.domain.Notice" >
+        select * from notice
+    </select>
+  <select id="queryById" resultType="com.tjl.credit.domain.Notice" >
+        select * from notice where id=#{id}
+    </select>
 </mapper>

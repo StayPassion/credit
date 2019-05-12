@@ -2,11 +2,17 @@ package com.tjl.credit.service;
 
 import com.tjl.credit.dao.*;
 import com.tjl.credit.domain.*;
+import com.tjl.credit.utils.FileUtils;
 import com.tjl.credit.utils.RetResponse;
 import com.tjl.credit.utils.RetResult;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +34,8 @@ public class AdminService {
     private ProfessionalMapper professionalMapper;
     @Resource
     private TclassMapper tclassMapper;
+    @Resource
+    private NoticeMapper noticeMapper;
 
     public RetResult queryUserByNumber(User user) throws Exception {
         int flag = userMapper.queryUserByNumber(user);
@@ -62,17 +70,17 @@ public class AdminService {
         int flag = roleMapper.createRole(role);
         if (flag > 0) {
             return RetResponse.makeOKRsp("权限修改成功");
-        } else if (flag == 0){
+        } else if (flag == 0) {
             return RetResponse.makeOKRsp("权限没有任何修改");
         }
         return RetResponse.makeErrRsp("权限修改失败");
     }
 
     public RetResult insertRole(Role role) throws Exception {
-       int flag = roleMapper.insertRole(role);
+        int flag = roleMapper.insertRole(role);
         if (flag == 1) {
             return RetResponse.makeOKRsp("角色插入成功");
-        } else{
+        } else {
             return RetResponse.makeErrRsp("角色插入失败");
 
         }
@@ -80,9 +88,9 @@ public class AdminService {
 
     public RetResult queryAllRole() throws Exception {
         List<Role> roleList = roleMapper.queryAllRole();
-        if (roleList.size()>0){
-            return RetResponse.makeOKRsp("查询成功",roleList);
-        }else {
+        if (roleList.size() > 0) {
+            return RetResponse.makeOKRsp("查询成功", roleList);
+        } else {
             return RetResponse.makeErrRsp("查询失败");
         }
     }
@@ -91,7 +99,7 @@ public class AdminService {
         int flag = roleMapper.deleteRole(role);
         if (flag == 1) {
             return RetResponse.makeOKRsp("删除成功");
-        } else{
+        } else {
             return RetResponse.makeErrRsp("删除失败");
 
         }
@@ -101,7 +109,7 @@ public class AdminService {
         int flag = collegeMapper.insert(college);
         if (flag == 1) {
             return RetResponse.makeOKRsp("添加成功");
-        } else{
+        } else {
             return RetResponse.makeErrRsp("添加失败");
         }
     }
@@ -110,7 +118,7 @@ public class AdminService {
         int flag = professionalMapper.insert(professional);
         if (flag == 1) {
             return RetResponse.makeOKRsp("添加成功");
-        } else{
+        } else {
             return RetResponse.makeErrRsp("添加失败");
         }
     }
@@ -119,7 +127,7 @@ public class AdminService {
         int flag = tclassMapper.insert(tclass);
         if (flag == 1) {
             return RetResponse.makeOKRsp("添加成功");
-        } else{
+        } else {
             return RetResponse.makeErrRsp("添加失败");
         }
     }
@@ -128,9 +136,9 @@ public class AdminService {
         int flag = userMapper.updateUser(user);
         if (flag == 1) {
             return RetResponse.makeOKRsp("修改成功");
-        } else if (flag == 0){
+        } else if (flag == 0) {
             return RetResponse.makeOKRsp("没有任何修改");
-        }else {
+        } else {
             return RetResponse.makeErrRsp("修改失败");
         }
     }
@@ -139,8 +147,76 @@ public class AdminService {
         int flag = userMapper.deleteUser(user);
         if (flag == 1) {
             return RetResponse.makeOKRsp("删除成功");
-        }else {
+        } else {
             return RetResponse.makeErrRsp("删除失败");
         }
+    }
+
+    public RetResult uploadFile(MultipartFile file, String title, String content, String userNumber) throws Exception {
+        String fileName = FileUtils.getFileName(file);
+        Notice notice = new Notice();
+        notice.setTitle(title);
+        notice.setContent(content);
+        notice.setFile(fileName);
+        notice.setDate(new Date(System.currentTimeMillis()));
+        int flag = noticeMapper.insert(notice);
+
+        String url = FileUtils.makeDir(userNumber);
+
+        if (FileUtils.uploadFile(file, fileName, url) && flag == 1) {
+            return RetResponse.makeOKRsp("公告发布成功");
+        } else {
+            return RetResponse.makeErrRsp("公告发布失败");
+        }
+    }
+
+    public RetResult lookNotice() throws Exception {
+        List<Notice> noticeList = noticeMapper.lookNotice();
+        if (noticeList.size() > 0) {
+            return RetResponse.makeOKRsp("查询成功", noticeList);
+        } else if (noticeList.size() == 0) {
+            return RetResponse.makeOKRsp("没有数据");
+        }
+        return RetResponse.makeErrRsp("查询失败");
+    }
+
+    public void lookNoticeFile(String fileName, String userNumber, HttpServletResponse response) throws Exception {
+        String url = FileUtils.makeDir(userNumber);
+        File file = new File(url+"\\"+fileName);
+        FileInputStream fis = null;
+        if (file.exists()) {
+            try {
+            // 设置强制下载不打开    
+            response.reset();
+                response.addHeader("Content-Disposition", "attachment; filename="+ URLEncoder.encode(fileName,"UTF-8"));
+            response.setContentType("application/octet-stream; charset=utf-8");
+            fis =  new FileInputStream(file);
+            byte[] buffer = new byte[1024];
+            int count = 0;
+                while ((count = fis.read(buffer)) > 0) {
+                    response.getOutputStream().write(buffer, 0, count);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    response.getOutputStream().flush();
+                    response.getOutputStream().close();
+                    if (fis != null) {
+                        fis.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public RetResult queryNoticeById(Integer id) throws Exception {
+        Notice notice = noticeMapper.queryById(id);
+        if (notice==null){
+             return RetResponse.makeErrRsp("查询失败");
+        }
+        return RetResponse.makeOKRsp("查询成功", notice);
     }
 }

@@ -7,9 +7,12 @@ import com.tjl.credit.utils.RetResponse;
 import com.tjl.credit.utils.RetResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Author PengBo
@@ -23,11 +26,12 @@ public class AdminController {
 
     /**
      * 判断用户学号是否存在
+     *
      * @param user
      * @return
      */
     @PostMapping("/queryUserByNumber")
-    public RetResult queryUserByNumber(@RequestBody User user){
+    public RetResult queryUserByNumber(@RequestBody User user) {
         try {
             RetResult retResult = adminService.queryUserByNumber(user);
             return retResult;
@@ -35,13 +39,15 @@ public class AdminController {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
         }
     }
+
     /**
      * 创建角色
+     *
      * @param role
      * @return
      */
     @PostMapping("/insertRole")
-    public RetResult insertRole(@RequestBody Role role){
+    public RetResult insertRole(@RequestBody Role role) {
         try {
             RetResult retResult = adminService.insertRole(role);
             return retResult;
@@ -52,10 +58,11 @@ public class AdminController {
 
     /**
      * 查询所有角色
+     *
      * @return
      */
     @PostMapping("/queryAllRole")
-    public RetResult queryAllRole(){
+    public RetResult queryAllRole() {
         try {
             RetResult retResult = adminService.queryAllRole();
             return retResult;
@@ -66,12 +73,12 @@ public class AdminController {
 
     /**
      * 创建用户
-     * @param user
      *
+     * @param user
      * @return
      */
     @PostMapping("/createUser")
-    public RetResult createUser(@RequestBody User user){
+    public RetResult createUser(@RequestBody User user) {
         try {
             RetResult retResult = adminService.createUser(user);
             return retResult;
@@ -82,10 +89,11 @@ public class AdminController {
 
     /**
      * 查询所有用户
+     *
      * @return
      */
     @PostMapping("/queryAllUser")
-    public RetResult queryAllUser(){
+    public RetResult queryAllUser() {
 
         try {
             RetResult retResult = adminService.queryAllUser();
@@ -94,12 +102,14 @@ public class AdminController {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
         }
     }
+
     /**
      * 修改用户
+     *
      * @return
      */
     @PostMapping("/updateUser")
-    public RetResult updateUser(@RequestBody User user){
+    public RetResult updateUser(@RequestBody User user) {
         try {
             RetResult retResult = adminService.updateUser(user);
             return retResult;
@@ -110,10 +120,11 @@ public class AdminController {
 
     /**
      * 修改用户
+     *
      * @return
      */
     @PostMapping("/deleteUser")
-    public RetResult deleteUser(@RequestBody User user){
+    public RetResult deleteUser(@RequestBody User user) {
         try {
             RetResult retResult = adminService.deleteUser(user);
             return retResult;
@@ -124,11 +135,12 @@ public class AdminController {
 
     /**
      * 修改角色权限
+     *
      * @param role
      * @return
      */
     @PostMapping("/createRole")
-    public RetResult createRole(@RequestBody  Role role){
+    public RetResult createRole(@RequestBody Role role) {
         try {
             RetResult retResult = adminService.createRole(role);
             return retResult;
@@ -136,13 +148,15 @@ public class AdminController {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
         }
     }
+
     /**
      * 修改角色权限
+     *
      * @param role
      * @return
      */
     @PostMapping("/deleteRole")
-    public RetResult deleteRole(@RequestBody  Role role){
+    public RetResult deleteRole(@RequestBody Role role) {
         try {
             RetResult retResult = adminService.deleteRole(role);
             return retResult;
@@ -150,13 +164,15 @@ public class AdminController {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
         }
     }
+
     /**
      * 添加学院
+     *
      * @param college
      * @return
      */
     @PostMapping("/createCollege")
-    public RetResult createCollege(@RequestBody College college){
+    public RetResult createCollege(@RequestBody College college) {
         try {
             RetResult retResult = adminService.createCollege(college);
             return retResult;
@@ -164,13 +180,15 @@ public class AdminController {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
         }
     }
+
     /**
      * 添加专业
+     *
      * @param professional
      * @return
      */
     @PostMapping("/createProfessional")
-    public RetResult createProfessional(@RequestBody Professional professional){
+    public RetResult createProfessional(@RequestBody Professional professional) {
         try {
             RetResult retResult = adminService.createProfessional(professional);
             return retResult;
@@ -178,13 +196,15 @@ public class AdminController {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
         }
     }
+
     /**
      * 添加班级
+     *
      * @param tclass
      * @return
      */
     @PostMapping("/createTclass")
-    public RetResult createTclass(@RequestBody Tclass tclass){
+    public RetResult createTclass(@RequestBody Tclass tclass) {
         try {
             RetResult retResult = adminService.createTclass(tclass);
             return retResult;
@@ -193,4 +213,69 @@ public class AdminController {
         }
     }
 
+    /**
+     * 添加公告
+     * @param file
+     * @param title
+     * @param content
+     * @param userNumber
+     * @return
+     */
+    @PostMapping("/uploadFile")
+    public RetResult uploadFile(@RequestParam("myfile") MultipartFile file, String title, String content, String userNumber) {
+        try {
+            RetResult retResult = adminService.uploadFile(file, title, content, userNumber);
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+
+    /**
+     * 查询所有公告
+     *
+     * @param
+     * @return
+     */
+    @PostMapping("/lookNotice")
+    public RetResult lookNotice() {
+        try {
+            RetResult retResult = adminService.lookNotice();
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+
+    /**
+     * 根据id查询公告
+     *
+     * @param id
+     * @return
+     */
+    @PostMapping("/queryNoticeById")
+    public RetResult queryNoticeById(Integer id) {
+        try {
+            RetResult retResult = adminService.queryNoticeById(id);
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+
+    /**
+     * 下载文件
+     *
+     * @param
+     * @return
+     */
+    @PostMapping("/downloadNoticeFile")
+    public void lookNoticeFile(String fileName, String userNumber, HttpServletResponse response) {
+        System.out.println(fileName+"---------"+userNumber);
+        try {
+            adminService.lookNoticeFile(fileName, userNumber, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

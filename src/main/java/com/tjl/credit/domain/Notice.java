@@ -1,5 +1,7 @@
 package com.tjl.credit.domain;
 
+import java.sql.Date;
+
 public class Notice {
     private Integer id;
 
@@ -8,6 +10,15 @@ public class Notice {
     private String content;
 
     private String file;
+    private Date date;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Integer getId() {
         return id;
