@@ -47,8 +47,8 @@ public class FileUtils {
         }
         return true;
     }
-    public static void downloadFile(String url,String fileName,
-                                    HttpServletResponse response,File file) throws Exception {
+
+    public static void downloadFile(String fileName,HttpServletResponse response,File file) throws Exception {
 
         if (fileName != null) {
             //设置文件路径

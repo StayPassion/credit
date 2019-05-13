@@ -37,6 +37,7 @@ public class AdminService {
     @Resource
     private NoticeMapper noticeMapper;
 
+
     public RetResult queryUserByNumber(User user) throws Exception {
         int flag = userMapper.queryUserByNumber(user);
         if (flag == 1) {
@@ -183,7 +184,7 @@ public class AdminService {
     public void lookNoticeFile(String fileName, String userNumber, HttpServletResponse response) throws Exception {
         String url = FileUtils.makeDir(userNumber);
         File file = new File(url+"\\"+fileName);
-       FileUtils.downloadFile(url,fileName,response,file);
+       FileUtils.downloadFile(fileName,response,file);
     }
 
     public RetResult queryNoticeById(Integer id) throws Exception {
@@ -204,12 +205,20 @@ public class AdminService {
     }
 
     public RetResult queryProfessional(Professional professional)throws Exception {
-/*        List<Professional> professionalList = collegeMapper.queryProfessional(professional);
-        if (collegeList.size() > 0) {
-            return RetResponse.makeOKRsp("查询成功", collegeList);
+      List<Professional> professionalList = professionalMapper.queryProfessional(professional);
+        if (professionalList.size() > 0) {
+            return RetResponse.makeOKRsp("查询成功", professionalList);
         } else {
             return RetResponse.makeErrRsp("查询失败");
-        }*/
-        return RetResponse.makeOKRsp("查询成功");
+        }
+    }
+
+    public RetResult queryTclass(Tclass tclass) throws Exception {
+        List<Tclass> tclassList = tclassMapper.queryTclass(tclass);
+        if (tclassList.size() > 0) {
+            return RetResponse.makeOKRsp("查询成功", tclassList);
+        } else {
+            return RetResponse.makeErrRsp("查询失败");
+        }
     }
 }

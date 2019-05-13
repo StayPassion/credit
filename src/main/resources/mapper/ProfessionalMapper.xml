@@ -37,4 +37,7 @@
       </if>
     </trim>
   </insert>
+  <select id="queryProfessional" resultMap="BaseResultMap">
+    select * from credit.professional where college_id=#{collegeId}
+  </select>
 </mapper>

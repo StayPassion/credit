@@ -211,7 +211,7 @@ public class AdminController {
         }
     }
     /**
-     * 添加专业
+     * 查询专业
      *
      * @param professional
      * @return
@@ -236,6 +236,21 @@ public class AdminController {
     public RetResult createTclass(@RequestBody Tclass tclass) {
         try {
             RetResult retResult = adminService.createTclass(tclass);
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+    /**
+     * 查询班级
+     *
+     * @param tclass
+     * @return
+     */
+    @PostMapping("/queryTclass")
+    public RetResult queryTclass(@RequestBody Tclass tclass) {
+        try {
+            RetResult retResult = adminService.queryTclass(tclass);
             return retResult;
         } catch (Exception e) {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
