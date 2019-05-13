@@ -28,4 +28,7 @@
       </if>
     </trim>
   </insert>
+  <select id="queryAllCollege" resultType="com.tjl.credit.domain.College">
+    select * from college
+  </select>
 </mapper>

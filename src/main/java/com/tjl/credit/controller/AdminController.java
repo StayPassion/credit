@@ -167,7 +167,6 @@ public class AdminController {
 
     /**
      * 添加学院
-     *
      * @param college
      * @return
      */
@@ -180,6 +179,21 @@ public class AdminController {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
         }
     }
+    /**
+     * 添加学院
+     * @param
+     * @return
+     */
+    @PostMapping("/queryAllCollege")
+    public RetResult queryAllCollege() {
+        try {
+            RetResult retResult = adminService.queryAllCollege();
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+
 
     /**
      * 添加专业
@@ -191,6 +205,21 @@ public class AdminController {
     public RetResult createProfessional(@RequestBody Professional professional) {
         try {
             RetResult retResult = adminService.createProfessional(professional);
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+    /**
+     * 添加专业
+     *
+     * @param professional
+     * @return
+     */
+    @PostMapping("/queryProfessional")
+    public RetResult queryProfessional(@RequestBody Professional professional) {
+        try {
+            RetResult retResult = adminService.queryProfessional(professional);
             return retResult;
         } catch (Exception e) {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
@@ -271,7 +300,6 @@ public class AdminController {
      */
     @PostMapping("/downloadNoticeFile")
     public void lookNoticeFile(String fileName, String userNumber, HttpServletResponse response) {
-        System.out.println(fileName+"---------"+userNumber);
         try {
             adminService.lookNoticeFile(fileName, userNumber, response);
         } catch (Exception e) {

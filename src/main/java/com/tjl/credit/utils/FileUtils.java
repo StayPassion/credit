@@ -3,9 +3,8 @@ package com.tjl.credit.utils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
+import java.net.URLEncoder;
 
 /**
  * @Author PengBo
@@ -13,7 +12,6 @@ import java.io.IOException;
  * @Version 1.0.0
  */
 public class FileUtils {
-    private static String dir="D:\\myfile";
 
     /**
      * 创建文件夹的路径，基础路径加上学号文件夹
@@ -21,6 +19,7 @@ public class FileUtils {
      * @return
      */
     public static String makeDir(String userNumber){
+        String dir = "D:\\myfile";
         dir += "\\"+userNumber;
         return dir;
     }
@@ -48,33 +47,50 @@ public class FileUtils {
         }
         return true;
     }
-    public static void downloadFile(String url,String fileName, HttpServletResponse response) {
-        File file = new File(url+"\\"+fileName);
-        FileInputStream fis = null;
-        if (file.exists()) {
-            try {
-                // 设置强制下载不打开    
-                response.reset();
-                response.setHeader("Content-Disposition", "attachment; filename="+fileName);
-                response.setContentType("application/octet-stream; charset=utf-8");
-                //response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);
-                fis =  new FileInputStream(file);
+    public static void downloadFile(String url,String fileName,
+                                    HttpServletResponse response,File file) throws Exception {
+
+        if (fileName != null) {
+            //设置文件路径
+
+            // 如果文件名存在，则进行下载
+            if (file.exists()) {
+                // 配置文件下载
+                response.setHeader("content-type", "application/octet-stream");
+                response.setContentType("application/octet-stream");
+                // 下载文件能正常显示中文
+                response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+
+                // 实现文件下载
                 byte[] buffer = new byte[1024];
-                int count = 0;
-                while ((count = fis.read(buffer)) > 0) {
-                    response.getOutputStream().write(buffer, 0, count);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
+                FileInputStream fis = null;
+                BufferedInputStream bis = null;
                 try {
-                    response.getOutputStream().flush();
-                    response.getOutputStream().close();
-                    if (fis != null) {
-                        fis.close();
+                    fis = new FileInputStream(file);
+                    bis = new BufferedInputStream(fis);
+                    OutputStream os = response.getOutputStream();
+                    int i = bis.read(buffer);
+                    while (i != -1) {
+                        os.write(buffer, 0, i);
+                        i = bis.read(buffer);
                     }
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
+                } finally {
+                    if (bis != null) {
+                        try {
+                            bis.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (fis != null) {
+                        try {
+                            fis.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
         }

@@ -183,33 +183,7 @@ public class AdminService {
     public void lookNoticeFile(String fileName, String userNumber, HttpServletResponse response) throws Exception {
         String url = FileUtils.makeDir(userNumber);
         File file = new File(url+"\\"+fileName);
-        FileInputStream fis = null;
-        if (file.exists()) {
-            try {
-            // 设置强制下载不打开    
-            response.reset();
-                response.addHeader("Content-Disposition", "attachment; filename="+ URLEncoder.encode(fileName,"UTF-8"));
-            response.setContentType("application/octet-stream; charset=utf-8");
-            fis =  new FileInputStream(file);
-            byte[] buffer = new byte[1024];
-            int count = 0;
-                while ((count = fis.read(buffer)) > 0) {
-                    response.getOutputStream().write(buffer, 0, count);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    response.getOutputStream().flush();
-                    response.getOutputStream().close();
-                    if (fis != null) {
-                        fis.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+       FileUtils.downloadFile(url,fileName,response,file);
     }
 
     public RetResult queryNoticeById(Integer id) throws Exception {
@@ -218,5 +192,24 @@ public class AdminService {
              return RetResponse.makeErrRsp("查询失败");
         }
         return RetResponse.makeOKRsp("查询成功", notice);
+    }
+
+    public RetResult queryAllCollege() throws Exception {
+        List<College> collegeList = collegeMapper.queryAllCollege();
+        if (collegeList.size() > 0) {
+            return RetResponse.makeOKRsp("查询成功", collegeList);
+        } else {
+            return RetResponse.makeErrRsp("查询失败");
+        }
+    }
+
+    public RetResult queryProfessional(Professional professional)throws Exception {
+/*        List<Professional> professionalList = collegeMapper.queryProfessional(professional);
+        if (collegeList.size() > 0) {
+            return RetResponse.makeOKRsp("查询成功", collegeList);
+        } else {
+            return RetResponse.makeErrRsp("查询失败");
+        }*/
+        return RetResponse.makeOKRsp("查询成功");
     }
 }
