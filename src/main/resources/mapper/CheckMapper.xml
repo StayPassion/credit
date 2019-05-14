@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tjl.credit.dao.CheckMapper">
+  <resultMap id="BaseResultMap" type="com.tjl.credit.domain.Check">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="creditid" jdbcType="INTEGER" property="creditId" />
+    <result column="checkuserid" jdbcType="VARCHAR" property="checkUserId" />
+    <result column="result" jdbcType="VARCHAR" property="result" />
+    <result column="opinion" jdbcType="VARCHAR" property="opinion" />
+  </resultMap>
+  <insert id="insert">
+    insert into check ( creditid, checkuserid,
+      result, opinion)
+    values ( #{creditId,jdbcType=INTEGER}, #{checkUserId,jdbcType=VARCHAR},
+      #{result,jdbcType=VARCHAR}, #{opinion,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tjl.credit.domain.Check">
+    insert into check
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="creditId != null">
+        credit_id,
+      </if>
+      <if test="checkUserId != null">
+        check_user_id,
+      </if>
+      <if test="result != null">
+        result,
+      </if>
+      <if test="opinion != null">
+        opinion,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="creditId != null">
+        #{creditId,jdbcType=INTEGER},
+      </if>
+      <if test="checkUserId != null">
+        #{checkUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null">
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="opinion != null">
+        #{opinion,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

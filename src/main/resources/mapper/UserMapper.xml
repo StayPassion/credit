@@ -190,6 +190,9 @@
     <delete id="deleteUser">
         delete from user where username = #{username}
     </delete>
+    <select id="queryCollege" resultType="String">
+        select college from user where username = #{username}
+    </select>
 
 
 </mapper>

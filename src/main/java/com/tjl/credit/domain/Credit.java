@@ -5,7 +5,7 @@ import java.util.Date;
 public class Credit {
     private Integer id;
 
-    private Integer userId;
+    private String username;
 
     private Date atime;
 
@@ -16,12 +16,15 @@ public class Credit {
     private String note;
 
     private String file;
+    private String tempcollege;
 
-    private String result;
+    public String getTempcollege() {
+        return tempcollege;
+    }
 
-    private String opinion;
-
-    private String name;
+    public void setTempcollege(String tempcollege) {
+        this.tempcollege = tempcollege;
+    }
 
     public Integer getId() {
         return id;
@@ -31,12 +34,12 @@ public class Credit {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Date getAtime() {
@@ -79,27 +82,4 @@ public class Credit {
         this.file = file == null ? null : file.trim();
     }
 
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result == null ? null : result.trim();
-    }
-
-    public String getOpinion() {
-        return opinion;
-    }
-
-    public void setOpinion(String opinion) {
-        this.opinion = opinion == null ? null : opinion.trim();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
 }

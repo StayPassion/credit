@@ -2,8 +2,12 @@ package com.tjl.credit.dao;
 
 import com.tjl.credit.domain.Credit;
 
-public interface CreditMapper {
-    int insert(Credit record);
+import java.util.List;
 
-    int insertSelective(Credit record);
+public interface CreditMapper {
+
+
+    int insertCredit(Credit credit) throws Exception;
+
+    List<Credit> queryCredit(String college) throws Exception;
 }

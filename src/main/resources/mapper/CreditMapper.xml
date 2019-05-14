@@ -3,34 +3,22 @@
 <mapper namespace="com.tjl.credit.dao.CreditMapper">
   <resultMap id="CreditResultMap" type="com.tjl.credit.domain.Credit">
     <result column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="atime" jdbcType="TIMESTAMP" property="atime" />
     <result column="ctype" jdbcType="VARCHAR" property="ctype" />
     <result column="state" jdbcType="VARCHAR" property="state" />
     <result column="note" jdbcType="VARCHAR" property="note" />
     <result column="file" jdbcType="VARCHAR" property="file" />
-    <result column="result" jdbcType="VARCHAR" property="result" />
-    <result column="opinion" jdbcType="VARCHAR" property="opinion" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="tempcollege" jdbcType="VARCHAR" property="tempcollege" />
+
   </resultMap>
-  <insert id="insert" parameterType="com.tjl.credit.domain.Credit">
-    insert into credit (id, user_id, atime, 
-      ctype, state, note, 
-      file, result, opinion, 
-      name)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{atime,jdbcType=TIMESTAMP}, 
-      #{ctype,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, 
-      #{file,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, #{opinion,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.tjl.credit.domain.Credit">
+
+  <insert id="insertCredit" parameterType="com.tjl.credit.domain.Credit">
     insert into credit
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="userId != null">
-        user_id,
+
+      <if test="username != null">
+        username,
       </if>
       <if test="atime != null">
         atime,
@@ -47,22 +35,13 @@
       <if test="file != null">
         file,
       </if>
-      <if test="result != null">
-        result,
-      </if>
-      <if test="opinion != null">
-        opinion,
-      </if>
-      <if test="name != null">
-        name,
+      <if test="tempcollege != null">
+        tempcollege,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+      <if test="username != null">
+        #{username,jdbcType=INTEGER},
       </if>
       <if test="atime != null">
         #{atime,jdbcType=TIMESTAMP},
@@ -79,15 +58,12 @@
       <if test="file != null">
         #{file,jdbcType=VARCHAR},
       </if>
-      <if test="result != null">
-        #{result,jdbcType=VARCHAR},
-      </if>
-      <if test="opinion != null">
-        #{opinion,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="tempcollege != null">
+        #{tempcollege,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
+  <select id="queryCredit" resultType="com.tjl.credit.domain.Credit">
+    select * from credit.credit where tempcollege=#{tempcollege}
+  </select>
 </mapper>

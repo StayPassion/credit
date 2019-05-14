@@ -24,4 +24,6 @@ public interface UserMapper {
 
     int updateUser(User record)throws Exception;
     int deleteUser(User user)throws Exception;
+
+    String queryCollege(String username)throws Exception;
 }
