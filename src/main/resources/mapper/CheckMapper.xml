@@ -9,7 +9,7 @@
     <result column="opinion" jdbcType="VARCHAR" property="opinion" />
   </resultMap>
   <insert id="insert">
-    insert into check ( creditid, checkuserid,
+    insert into checkcredit ( creditid, checkuserid,
       result, opinion)
     values ( #{creditId,jdbcType=INTEGER}, #{checkUserId,jdbcType=VARCHAR},
       #{result,jdbcType=VARCHAR}, #{opinion,jdbcType=VARCHAR})
