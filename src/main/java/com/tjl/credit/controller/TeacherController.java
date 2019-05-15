@@ -33,6 +33,17 @@ public class TeacherController {
         }
     }
 
+    /**
+     * 学分审核
+     * @param username
+     * @param fileName
+     * @param id
+     * @param result
+     * @param opinion
+     * @param teacherNumber
+     * @param response
+     * @return
+     */
     @PostMapping("/checkCredit")
     public RetResult checkCredit(String username, String fileName,Integer id,String result,String opinion,
                                  String teacherNumber, HttpServletResponse response){

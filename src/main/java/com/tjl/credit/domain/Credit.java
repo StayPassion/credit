@@ -1,6 +1,7 @@
 package com.tjl.credit.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Credit {
     private Integer id;

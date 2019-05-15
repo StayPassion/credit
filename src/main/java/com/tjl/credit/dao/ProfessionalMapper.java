@@ -10,4 +10,6 @@ public interface ProfessionalMapper {
     int insertSelective(Professional record);
 
     List<Professional> queryProfessional(Professional professional) throws Exception;
+
+    void deleteProfessional(Professional professional) throws Exception ;
 }

@@ -48,7 +48,12 @@ public class TeacherService {
         check.setCheckUserId(teacherNumber);
         check.setResult(result);
         check.setOpinion(opinion);
+        Credit credit = new Credit();
+        credit.setState("已审核");
+        credit.setId(id);
+        System.out.println(credit.getId()+"******"+credit.getState());
         int flag = checkMapper.insert(check);
+        creditMapper.updateStatus(credit);
             if(flag ==1){
                 return RetResponse.makeOKRsp("提交成功");
             }else {

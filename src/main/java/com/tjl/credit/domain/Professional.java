@@ -30,4 +30,6 @@ public class Professional {
     public void setProfessional(String professional) {
         this.professional = professional == null ? null : professional.trim();
     }
+
+
 }

@@ -36,6 +36,8 @@ public class AdminService {
     private TclassMapper tclassMapper;
     @Resource
     private NoticeMapper noticeMapper;
+    @Resource
+    private CreditMapper creditMapper;
 
 
     public RetResult queryUserByNumber(User user) throws Exception {
@@ -183,14 +185,14 @@ public class AdminService {
 
     public void lookNoticeFile(String fileName, String userNumber, HttpServletResponse response) throws Exception {
         String url = FileUtils.makeDir(userNumber);
-        File file = new File(url+"\\"+fileName);
-       FileUtils.downloadFile(fileName,response,file);
+        File file = new File(url + "\\" + fileName);
+        FileUtils.downloadFile(fileName, response, file);
     }
 
     public RetResult queryNoticeById(Integer id) throws Exception {
         Notice notice = noticeMapper.queryById(id);
-        if (notice==null){
-             return RetResponse.makeErrRsp("查询失败");
+        if (notice == null) {
+            return RetResponse.makeErrRsp("查询失败");
         }
         return RetResponse.makeOKRsp("查询成功", notice);
     }
@@ -204,8 +206,8 @@ public class AdminService {
         }
     }
 
-    public RetResult queryProfessional(Professional professional)throws Exception {
-      List<Professional> professionalList = professionalMapper.queryProfessional(professional);
+    public RetResult queryProfessional(Professional professional) throws Exception {
+        List<Professional> professionalList = professionalMapper.queryProfessional(professional);
         if (professionalList.size() > 0) {
             return RetResponse.makeOKRsp("查询成功", professionalList);
         } else {
@@ -219,6 +221,67 @@ public class AdminService {
             return RetResponse.makeOKRsp("查询成功", tclassList);
         } else {
             return RetResponse.makeErrRsp("查询失败");
+        }
+    }
+
+    public RetResult deleteCollege(College college) throws Exception {
+        Professional professional = new Professional();
+        professional.setCollegeId(college.getId());
+        List<Professional> professionalList = professionalMapper.queryProfessional(professional);
+        if (professionalList.size() > 0) {
+            return RetResponse.makeOKRsp("学院下有相关专业");
+        } else {
+            collegeMapper.deleteCollege(college);
+            return RetResponse.makeOKRsp("删除成功");
+        }
+    }
+
+    public RetResult deleteProfessional(Professional professional) throws Exception {
+        Tclass tclass = new Tclass();
+        tclass.setProfessionalId(professional.getId());
+        List<Tclass> tclassList = tclassMapper.queryTclass(tclass);
+        if (tclassList.size() > 0) {
+            return RetResponse.makeOKRsp("专业下有相关班级");
+        } else {
+            professionalMapper.deleteProfessional(professional);
+            return RetResponse.makeOKRsp("删除成功");
+        }
+    }
+
+    public RetResult queryUser(Tclass tclass) throws Exception {
+        Tclass tclass1 = tclassMapper.queryOnlyTclass(tclass);
+        User user = new User();
+        user.setTclass(tclass1.getTclass());
+        System.out.println(user.getTclass());
+        List<User> userList = userMapper.queryUser(user);
+        if (userList.size() == 0) {
+            return RetResponse.makeOKRsp("没有学生");
+        }
+        return RetResponse.makeOKRsp("查询成功", userList);
+    }
+
+    public RetResult deleteTclass(Tclass tclass) throws Exception {
+        Tclass tclass1 = tclassMapper.queryOnlyTclass(tclass);
+        User user = new User();
+        user.setTclass(tclass1.getTclass());
+        System.out.println(user.getTclass());
+        List<User> userList = userMapper.queryUser(user);
+        if (userList.size() > 0) {
+            return RetResponse.makeOKRsp("改班级下有学生");
+        } else {
+            tclassMapper.deleteTclass(tclass);
+            return RetResponse.makeOKRsp("删除成功");
+        }
+
+    }
+
+    public RetResult queryCreditState(Credit credit) throws Exception {
+        List<Credit> creditList = creditMapper.queryCreditState(credit);
+        if (creditList.size()>0){
+            return RetResponse.makeOKRsp("查询成功",creditList);
+        }else {
+            return RetResponse.makeOKRsp("没有记录");
+
         }
     }
 }

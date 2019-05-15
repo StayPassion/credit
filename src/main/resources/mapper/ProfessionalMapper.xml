@@ -40,4 +40,7 @@
   <select id="queryProfessional" resultMap="BaseResultMap">
     select * from credit.professional where college_id=#{collegeId}
   </select>
+  <delete id="deleteProfessional">
+    delete from credit.professional where id=#{id}
+  </delete>
 </mapper>

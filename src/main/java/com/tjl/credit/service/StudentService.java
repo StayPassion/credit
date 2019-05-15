@@ -35,6 +35,7 @@ public class StudentService {
         credit.setNote(note);
         credit.setUsername(userNumber);
         credit.setTempcollege(tempCollege);
+        credit.setState("未审核");
 
         int flag = creditMapper.insertCredit(credit);
         String url = FileUtils.makeDir(userNumber);

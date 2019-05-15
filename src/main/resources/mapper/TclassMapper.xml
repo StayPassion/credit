@@ -40,4 +40,10 @@
   <select id="queryTclass" resultMap="BaseResultMap">
     select * from credit.tclass where professional_id=#{professionalId}
   </select>
+  <select id="queryOnlyTclass" resultMap="BaseResultMap">
+    select * from tclass where id=#{id}
+  </select>
+  <delete id="deleteTclass">
+    delete from credit.tclass where id=#{id}
+  </delete>
 </mapper>

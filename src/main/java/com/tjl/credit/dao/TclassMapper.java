@@ -10,4 +10,8 @@ public interface TclassMapper {
     int insert(Tclass record);
 
     int insertSelective(Tclass record);
+
+    Tclass queryOnlyTclass(Tclass tclass) throws Exception;
+
+    void deleteTclass(Tclass tclass)throws Exception;
 }

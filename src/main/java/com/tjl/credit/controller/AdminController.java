@@ -94,7 +94,6 @@ public class AdminController {
      */
     @PostMapping("/queryAllUser")
     public RetResult queryAllUser() {
-
         try {
             RetResult retResult = adminService.queryAllUser();
             return retResult;
@@ -180,7 +179,7 @@ public class AdminController {
         }
     }
     /**
-     * 添加学院
+     * 查询学院
      * @param
      * @return
      */
@@ -188,6 +187,20 @@ public class AdminController {
     public RetResult queryAllCollege() {
         try {
             RetResult retResult = adminService.queryAllCollege();
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+    /**
+     * 删除学院
+     * @param
+     * @return
+     */
+    @PostMapping("/deleteCollege")
+    public RetResult deleteCollege(@RequestBody College college) {
+        try {
+            RetResult retResult = adminService.deleteCollege(college);
             return retResult;
         } catch (Exception e) {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
@@ -227,6 +240,21 @@ public class AdminController {
     }
 
     /**
+     * 删除专业
+     * @param professional
+     * @return
+     */
+    @PostMapping("/deleteProfessional")
+    public RetResult deleteProfessional(@RequestBody Professional professional) {
+        try {
+            RetResult retResult = adminService.deleteProfessional(professional);
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+
+    /**
      * 添加班级
      *
      * @param tclass
@@ -256,6 +284,36 @@ public class AdminController {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
         }
     }
+
+    /**
+     * 查询班级学生
+     * @param tclass
+     * @return
+     */
+    @PostMapping("/queryUser")
+    public RetResult queryUser(@RequestBody Tclass tclass){
+        try {
+            RetResult retResult = adminService.queryUser(tclass);
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+    /**
+     * 删除班级
+     * @param tclass
+     * @return
+     */
+    @PostMapping("/deleteTclass")
+    public RetResult deleteTclass(@RequestBody Tclass tclass){
+        try {
+            RetResult retResult = adminService.deleteTclass(tclass);
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+
 
     /**
      * 添加公告
@@ -309,7 +367,6 @@ public class AdminController {
 
     /**
      * 下载文件
-     *
      * @param
      * @return
      */
@@ -321,4 +378,16 @@ public class AdminController {
             e.printStackTrace();
         }
     }
+    @PostMapping("/queryCreditState")
+    public RetResult queryCreditState(@RequestBody Credit credit) {
+        try {
+            RetResult retResult = adminService.queryCreditState(credit);
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+
+
+
 }

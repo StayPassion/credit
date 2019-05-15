@@ -14,4 +14,5 @@ public interface CollegeMapper {
 
     List<Professional> queryProfessional(Professional professional)throws Exception;
 
+    void deleteCollege(College college);
 }

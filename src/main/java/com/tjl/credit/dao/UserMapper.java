@@ -26,4 +26,6 @@ public interface UserMapper {
     int deleteUser(User user)throws Exception;
 
     String queryCollege(String username)throws Exception;
+
+    List<User> queryUser(User user)throws Exception;
 }

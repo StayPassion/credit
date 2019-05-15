@@ -31,4 +31,7 @@
   <select id="queryAllCollege" resultType="com.tjl.credit.domain.College">
     select * from college
   </select>
+  <delete id="deleteCollege">
+    delete from college where id=#{id}
+  </delete>
 </mapper>

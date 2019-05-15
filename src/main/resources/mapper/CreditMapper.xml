@@ -66,4 +66,11 @@
   <select id="queryCredit" resultType="com.tjl.credit.domain.Credit">
     select * from credit.credit where tempcollege=#{tempcollege}
   </select>
+  <update id="updateStatus">
+    update credit
+    set state = #{state} where id = #{id}
+  </update>
+  <select id="queryCreditState" resultType="com.tjl.credit.domain.Credit">
+    select * from credit.credit where state = #{state}
+  </select>
 </mapper>

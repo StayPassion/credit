@@ -193,6 +193,9 @@
     <select id="queryCollege" resultType="String">
         select college from user where username = #{username}
     </select>
+    <select id="queryUser" resultType="com.tjl.credit.domain.User">
+        select * from user where tclass=#{tclass}
+    </select>
 
 
 </mapper>

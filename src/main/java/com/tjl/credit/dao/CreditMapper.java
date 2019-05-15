@@ -10,4 +10,8 @@ public interface CreditMapper {
     int insertCredit(Credit credit) throws Exception;
 
     List<Credit> queryCredit(String college) throws Exception;
+
+    void updateStatus(Credit credit);
+
+    List<Credit> queryCreditState(Credit credit) throws Exception;
 }
