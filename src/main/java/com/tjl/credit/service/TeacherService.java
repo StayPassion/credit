@@ -50,11 +50,8 @@ public class TeacherService {
         check.setOpinion(opinion);
         Credit credit = new Credit();
         credit.setId(id);
-        if ("1".equals(result)){
-            credit.setState("通过");
-        }else if ("2".equals(result)){
-            credit.setState("不通过");
-        }
+        credit.setState("1");
+
         int flag = checkMapper.insert(check);
         creditMapper.updateStatus(credit);
             if(flag ==1){

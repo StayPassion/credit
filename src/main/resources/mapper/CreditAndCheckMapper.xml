@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tjl.credit.dao.CreditAndCheckMapper">
+    <resultMap id="BaseResultMap" type="com.tjl.credit.domain.Check">
+        <result column="creditid" jdbcType="INTEGER" property="creditId" />
+        <result column="checkuserid" jdbcType="VARCHAR" property="checkUserId" />
+        <result column="result" jdbcType="VARCHAR" property="result" />
+        <result column="opinion" jdbcType="VARCHAR" property="opinion" />
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="atime" jdbcType="TIMESTAMP" property="atime" />
+        <result column="ctype" jdbcType="VARCHAR" property="ctype" />
+        <result column="state" jdbcType="VARCHAR" property="state" />
+        <result column="note" jdbcType="VARCHAR" property="note" />
+        <result column="file" jdbcType="VARCHAR" property="file" />
+        <result column="tempcollege" jdbcType="VARCHAR" property="tempcollege" />
+    </resultMap>
+    <select id="queryMyCredit" resultType="com.tjl.credit.domain.CreditAndCheck">
+        select * from credit left join checkcredit on credit.credit.id=checkcredit.creditid  where username = #{username}
+    </select>
+
+    <select id="queryCreditState" resultType="com.tjl.credit.domain.CreditAndCheck">
+        select * from credit left join checkcredit on credit.credit.id=checkcredit.creditid  where  state = #{state} and tempcollege=#{tempcollege}
+    </select>
+</mapper>

@@ -1,6 +1,7 @@
 package com.tjl.credit.controller;
 
 import com.tjl.credit.domain.Credit;
+import com.tjl.credit.domain.CreditAndCheck;
 import com.tjl.credit.service.StudentService;
 import com.tjl.credit.utils.RetResponse;
 import com.tjl.credit.utils.RetResult;
@@ -43,13 +44,13 @@ public class StudentController {
 
     /**
      * 学生查询自己的申请记录
-     * @param credit
+     * @param creditAndCheck
      * @return
      */
     @PostMapping("/queryMyCredit")
-    public RetResult queryMyCredit(@RequestBody Credit credit){
+    public RetResult queryMyCredit(@RequestBody CreditAndCheck creditAndCheck){
         try {
-            RetResult retResult = studentService.queryMyCredit(credit);
+            RetResult retResult = studentService.queryMyCredit(creditAndCheck);
             return retResult;
         } catch (Exception e) {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");

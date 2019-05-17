@@ -1,8 +1,10 @@
 package com.tjl.credit.service;
 
+import com.tjl.credit.dao.CreditAndCheckMapper;
 import com.tjl.credit.dao.CreditMapper;
 import com.tjl.credit.dao.UserMapper;
 import com.tjl.credit.domain.Credit;
+import com.tjl.credit.domain.CreditAndCheck;
 import com.tjl.credit.utils.FileUtils;
 import com.tjl.credit.utils.RetResponse;
 import com.tjl.credit.utils.RetResult;
@@ -24,6 +26,8 @@ public class StudentService {
     private CreditMapper creditMapper;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private CreditAndCheckMapper creditAndCheckMapper;
 
     public RetResult insertCredit(MultipartFile file, String userNumber,
                                   String ctype, String note) throws Exception {
@@ -48,8 +52,9 @@ public class StudentService {
 
     }
 
-    public RetResult queryMyCredit(Credit credit) throws Exception {
-        List<Credit> creditList = creditMapper.queryMyCredit(credit);
+    public RetResult queryMyCredit(CreditAndCheck creditAndCheck) throws Exception {
+
+        List<CreditAndCheck> creditList = creditAndCheckMapper.queryMyCredit(creditAndCheck);
         if (creditList.size()>0){
             return RetResponse.makeOKRsp("查询成功",creditList);
         }else if (creditList.size()==0){

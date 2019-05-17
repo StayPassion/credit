@@ -381,13 +381,13 @@ public class AdminController {
 
     /**
      * 根据学分状态查询
-     * @param credit
+     * @param creditAndCheck
      * @return
      */
     @PostMapping("/queryCreditState")
-    public RetResult queryCreditState(@RequestBody Credit credit) {
+    public RetResult queryCreditState(@RequestBody CreditAndCheck creditAndCheck) {
         try {
-            RetResult retResult = adminService.queryCreditState(credit);
+            RetResult retResult = adminService.queryCreditState(creditAndCheck);
             return retResult;
         } catch (Exception e) {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");

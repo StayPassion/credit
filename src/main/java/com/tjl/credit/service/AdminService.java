@@ -11,11 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.URLEncoder;
 import java.sql.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author PengBo
@@ -38,7 +35,8 @@ public class AdminService {
     private NoticeMapper noticeMapper;
     @Resource
     private CreditMapper creditMapper;
-
+    @Resource
+    private CreditAndCheckMapper creditAndCheckMapper;
 
     public RetResult queryUserByNumber(User user) throws Exception {
         int flag = userMapper.queryUserByNumber(user);
@@ -275,8 +273,8 @@ public class AdminService {
 
     }
 
-    public RetResult queryCreditState(Credit credit) throws Exception {
-        List<Credit> creditList = creditMapper.queryCreditState(credit);
+    public RetResult queryCreditState(CreditAndCheck creditAndCheck) throws Exception {
+        List<Credit> creditList = creditAndCheckMapper.queryCreditState(creditAndCheck);
         if (creditList.size()>0){
             return RetResponse.makeOKRsp("查询成功",creditList);
         }else {
