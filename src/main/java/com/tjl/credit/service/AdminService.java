@@ -284,4 +284,8 @@ public class AdminService {
 
         }
     }
+
+    public RetResult queryCollegeCredit()throws Exception {
+        return RetResponse.makeOKRsp("没有记录");
+    }
 }

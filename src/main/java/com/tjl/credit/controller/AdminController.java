@@ -378,6 +378,12 @@ public class AdminController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 根据学分状态查询
+     * @param credit
+     * @return
+     */
     @PostMapping("/queryCreditState")
     public RetResult queryCreditState(@RequestBody Credit credit) {
         try {
@@ -387,7 +393,13 @@ public class AdminController {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
         }
     }
-
-
-
+    @PostMapping("/queryCollegeCredit")
+    public RetResult queryCollegeCredit(){
+        try {
+            RetResult retResult = adminService.queryCollegeCredit();
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
 }

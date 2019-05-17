@@ -49,9 +49,12 @@ public class TeacherService {
         check.setResult(result);
         check.setOpinion(opinion);
         Credit credit = new Credit();
-        credit.setState("已审核");
         credit.setId(id);
-        System.out.println(credit.getId()+"******"+credit.getState());
+        if ("1".equals(result)){
+            credit.setState("通过");
+        }else if ("2".equals(result)){
+            credit.setState("不通过");
+        }
         int flag = checkMapper.insert(check);
         creditMapper.updateStatus(credit);
             if(flag ==1){

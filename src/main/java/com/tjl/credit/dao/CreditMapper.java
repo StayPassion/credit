@@ -14,4 +14,6 @@ public interface CreditMapper {
     void updateStatus(Credit credit);
 
     List<Credit> queryCreditState(Credit credit) throws Exception;
+
+    List<Credit> queryMyCredit(Credit credit)throws Exception;
 }

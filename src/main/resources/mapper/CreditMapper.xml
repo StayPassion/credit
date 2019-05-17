@@ -71,6 +71,9 @@
     set state = #{state} where id = #{id}
   </update>
   <select id="queryCreditState" resultType="com.tjl.credit.domain.Credit">
-    select * from credit.credit where state = #{state}
+    select * from credit.credit where state = #{state} and tempcollege=#{tempcollege}
+  </select>
+  <select id="queryMyCredit" resultType="com.tjl.credit.domain.Credit">
+    select * from credit.credit where username=#{username}
   </select>
 </mapper>

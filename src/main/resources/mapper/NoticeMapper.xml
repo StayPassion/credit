@@ -46,7 +46,7 @@
     </trim>
   </insert>
     <select id="lookNotice" resultType="com.tjl.credit.domain.Notice" >
-        select * from notice
+        select * from notice order by id desc
     </select>
   <select id="queryById" resultType="com.tjl.credit.domain.Notice" >
         select * from notice where id=#{id}

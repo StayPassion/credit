@@ -1,9 +1,11 @@
 package com.tjl.credit.controller;
 
+import com.tjl.credit.domain.Credit;
 import com.tjl.credit.service.StudentService;
 import com.tjl.credit.utils.RetResponse;
 import com.tjl.credit.utils.RetResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,4 +40,20 @@ public class StudentController {
             return RetResponse.makeInternalServiceErrors("服务器内部错误");
         }
     }
+
+    /**
+     * 学生查询自己的申请记录
+     * @param credit
+     * @return
+     */
+    @PostMapping("/queryMyCredit")
+    public RetResult queryMyCredit(@RequestBody Credit credit){
+        try {
+            RetResult retResult = studentService.queryMyCredit(credit);
+            return retResult;
+        } catch (Exception e) {
+            return RetResponse.makeInternalServiceErrors("服务器内部错误");
+        }
+    }
+
 }

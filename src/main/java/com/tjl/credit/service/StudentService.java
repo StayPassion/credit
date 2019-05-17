@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author PengBo
@@ -35,7 +36,7 @@ public class StudentService {
         credit.setNote(note);
         credit.setUsername(userNumber);
         credit.setTempcollege(tempCollege);
-        credit.setState("未审核");
+        credit.setState("0");
 
         int flag = creditMapper.insertCredit(credit);
         String url = FileUtils.makeDir(userNumber);
@@ -45,5 +46,15 @@ public class StudentService {
             return RetResponse.makeErrRsp("提交失败");
         }
 
+    }
+
+    public RetResult queryMyCredit(Credit credit) throws Exception {
+        List<Credit> creditList = creditMapper.queryMyCredit(credit);
+        if (creditList.size()>0){
+            return RetResponse.makeOKRsp("查询成功",creditList);
+        }else if (creditList.size()==0){
+            return RetResponse.makeOKRsp("没有数据");
+        }
+        return RetResponse.makeErrRsp("查询失败");
     }
 }
